@@ -1,0 +1,14 @@
+# Site settings
+title: Survival Trial 
+email: info@survivaltrial.com
+description: > # Survival Trial is the Ultimate Adventure Race - The Ultimate Test!
+baseurl: "/landingtest" # the subpath of your site, e.g. /blog/
+# url: "http://sodakscreens.github.io" # the base hostname & protocol for your site
+twitter_username: survivaltrial
+github_username:  
+
+# Build settings
+markdown: kramdown
+
+paginate: 4
+paginate_path: "blog/page:num"
