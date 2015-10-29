@@ -227,27 +227,27 @@ socials:
           {% assign style = '' %}
         {% endif %}
 
-        <li class='frame centered-text {{style}}'>
+        <li class="frame centered-text {{style}}">
           <h1>{{slide.title}}</h1>
           <p>{{slide.tagline}}</p>
-          <div class='two spacing'></div>
-          <div class='buttons-wrapper'>
+          <div class="two spacing"></div>
+          <div class="buttons-wrapper">
             {% for button in slide.buttons %}
-              <a class='button {{button.class}}' href='{{button.url}}'>{{button.text}}</a>
+              <a class="button {{button.class}}" href="{{button.url}}">{{button.text}}</a>
             {% endfor %}
           </div>
           {% if slide.videos %}
-            <div class='video_image_touch' style='background-image: url({{slide.bg}});'></div>
-            <div class='video_wrap'>
-              <div class='overlay' style='background: #000000;opacity: 0.6;'></div>
-              <video autoplay=' ' class='bg_video' loop=' ' muted=' ' preload='auto'>
+            <div class="video_image_touch" style="background-image: url({{slide.bg}});"></div>
+            <div class="video_wrap">
+              <div class="overlay" style="background: #000000;opacity: 0.6;"></div>
+              <video autoplay=" " class="bg_video" loop=" " muted=" " preload="auto">
                 {% for video in slide.videos %}
-                  <source src='{{video.url}}' type='video/{{video.type}}'>
+                  <source src="{{video.url}}" type="video/{{video.type}}">
                 {% endfor %}
               </video>
             </div>
           {% else %}
-            <div class='bg' style='background-image: url({{slide.bg}});'></div>
+            <div class="bg" style="background-image: url({{slide.bg}});"></div>
           {% endif %}
         </li>
       {% endfor %}
