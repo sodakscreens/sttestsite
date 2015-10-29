@@ -201,104 +201,56 @@ socials:
     icon_class: fa fa-facebook
     link_to: http://facebook.com
 ---
-     <div class='mod modFullscreenSlider'>
-  <div class='fullscreen_slideshow' data-autostop='off'>
-    <a class='sequence-prev' href='javascript:void(0);'>
+    <div class="mod modFullscreenSlider">
+  <div class="fullscreen_slideshow" data-autostop="off">
+    <a class="sequence-prev" href="javascript:void(0);">
       <span></span>
     </a>
-    <a class='sequence-next' href='javascript:void(0);'>
+    <a class="sequence-next" href="javascript:void(0);">
       <span></span>
     </a>
-    <ul class='sequence-pagination'>
-      
-        
-          
-        
-        <li class="current"></li>
-      
-        
-          
-        
-        <li class=""></li>
-      
-        
-          
-        
-        <li class=""></li>
-      
+    <ul class="sequence-pagination">
+      {% for slide in page.slides %}
+        {% if forloop.first %}
+          {% assign class = 'current' %}
+        {% else %}
+          {% assign class = '' %}
+        {% endif %}
+        <li class="{{class}}"></li>
+      {% endfor %}
     </ul>
     <ul class="sequence-canvas">
-      
-        
-          
-        
+      {% for slide in page.slides %}
+        {% if forloop.first %}
+          {% assign style = 'static' %}
+        {% else %}
+          {% assign style = '' %}
+        {% endif %}
 
-        <li class='frame centered-text static'>
-          <h1>we are a tough team</h1>
-          <p>we deliver great things that you definitely love ...</p>
-          <div class='two spacing'></div>
-          <div class='buttons-wrapper'>
-            
-              <a class='button small' href='http://themeforest.net/user/honryou/portfolio?ref=honryou'>view portfolio</a>
-            
-              <a class='button small boxed' href='http://themeforest.net/user/honryou/portfolio?ref=honryou'>purchase now</a>
-            
+        <li class="frame centered-text {{style}}">
+          <h1>{{slide.title}}</h1>
+          <p>{{slide.tagline}}</p>
+          <div class="two spacing"></div>
+          <div class="buttons-wrapper">
+            {% for button in slide.buttons %}
+              <a class="button {{button.class}}" href="{{button.url}}">{{button.text}}</a>
+            {% endfor %}
           </div>
-          
-            <div class='bg' style='background-image: url(images/@stock/fullscreen-slide-1.jpg);'></div>
-          
-        </li>
-      
-        
-          
-        
-
-        <li class='frame centered-text '>
-          <h1>creative &amp; powerful</h1>
-          <p>It it very happy thing to make great website</p>
-          <div class='two spacing'></div>
-          <div class='buttons-wrapper'>
-            
-              <a class='button small' href='http://themeforest.net/user/honryou/portfolio?ref=honryou'>purchase now</a>
-            
-              <a class='button small boxed' href='http://themeforest.net/user/honryou/portfolio?ref=honryou'>view features</a>
-            
-          </div>
-          
-            <div class='video_image_touch' style='background-image: url(http://themes.blahlab.com/squarebox/wp-content/uploads/2014/12/out-short.jpg);'></div>
-            <div class='video_wrap'>
-              <div class='overlay' style='background: #000000;opacity: 0.6;'></div>
-              <video autoplay=' ' class='bg_video' loop=' ' muted=' ' preload='auto'>
-                
-                  <source src='http://themes.blahlab.com/squarebox/wp-content/uploads/2014/11/out-short.webm' type='video/webm'>
-                
-                  <source src='http://themes.blahlab.com/squarebox/wp-content/uploads/2014/11/out-short.mp4' type='video/mp4'>
-                
+          {% if slide.videos %}
+            <div class="video_image_touch" style="background-image: url({{slide.bg}});"></div>
+            <div class="video_wrap">
+              <div class="overlay" style="background: #000000;opacity: 0.6;"></div>
+              <video autoplay=" " class="bg_video" loop=" " muted=" " preload="auto">
+                {% for video in slide.videos %}
+                  <source src="{{video.url}}" type="video/{{video.type}}">
+                {% endfor %}
               </video>
             </div>
-          
+          {% else %}
+            <div class="bg" style="background-image: url({{slide.bg}});"></div>
+          {% endif %}
         </li>
-      
-        
-          
-        
-
-        <li class='frame centered-text '>
-          <h1>Always have a dream</h1>
-          <p>It is very quick to build a website with this theme</p>
-          <div class='two spacing'></div>
-          <div class='buttons-wrapper'>
-            
-              <a class='button small' href='http://themeforest.net/user/honryou/portfolio?ref=honryou'>Purchase now</a>
-            
-              <a class='button boxed small' href='http://themeforest.net/user/honryou/portfolio?ref=honryou'>View features</a>
-            
-          </div>
-          
-            <div class='bg' style='background-image: url(../images/@stock/fullscreen-slide-3.jpg);'></div>
-          
-        </li>
-      
+      {% endfor %}
     </ul>
   </div>
 </div>
@@ -307,18 +259,12 @@ socials:
   <div class='row'>
     <div class='large-10 columns large-centered'>
       <div class='spacing'></div>
-      <div class='alt mod modSectionHeader'>
-  <div class='special-title centered-text'>
-    <h2 style=''>
-      Our story
-    </h2>
-  </div>
-</div>
+      {% include section-header.html class="alt" title="Our story" %}
       <div class='spacing'></div>
       <p class='centered-text' style='font-size: 1.6rem'>
         This is the introduction of your team, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat consectetuer sit amet magna adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam.
       </p>
-      <div class='two spacing'></div>
+      <div class="two spacing"></div>
       <p class='centered-text'>
         <img alt="" src="../images/@stock/circle-logo.png" />
       </p>
@@ -329,48 +275,22 @@ socials:
 <div class='full parallax' style='background-image: url(../images/@stock/milestone-bg-2.jpg); color: #fff;'>
   <div class='row'>
     <div class='large-12 columns'>
-      <div class='alt mod modSectionHeader'>
-  <div class='special-title centered-text'>
-    <h2 style='color: #fff;'>
-      the achievements
-    </h2>
-  </div>
-</div>
+      {% include section-header.html title="the achievements" class="alt" title_style="color: #fff;" %}
       <div class='two spacing'></div>
     </div>
   </div>
   <div class='row'>
     <div class='medium-3 large-3 columns'>
-      <div class='mod modMilestone'>
-  <i class='fa fa-folder-open'></i>
-  <strong data-from='0' data-to='69'>&nbsp;</strong>
-  <span>Projects Completed</span>
-  <div class='four spacing'></div>
-</div>
+      {% include milestone.html title="Projects Completed" from="0" to="69" icon_class="fa fa-folder-open" %}
     </div>
     <div class='medium-3 large-3 columns'>
-      <div class='mod modMilestone'>
-  <i class='fa fa-coffee'></i>
-  <strong data-from='0' data-to='726'>&nbsp;</strong>
-  <span>Cups of coffee offered</span>
-  <div class='four spacing'></div>
-</div>
+      {% include milestone.html title="Cups of coffee offered" from="0" to="726" icon_class="fa fa-coffee" %}
     </div>
     <div class='medium-3 large-3 columns'>
-      <div class='mod modMilestone'>
-  <i class='fa fa-thumbs-up'></i>
-  <strong data-from='0' data-to='59'>&nbsp;</strong>
-  <span>Happy clients</span>
-  <div class='four spacing'></div>
-</div>
+      {% include milestone.html title="Happy clients" from="0" to="59" icon_class="fa fa-thumbs-up" %}
     </div>
     <div class='medium-3 large-3 columns'>
-      <div class='mod modMilestone'>
-  <i class='fa fa-file-text'></i>
-  <strong data-from='0' data-to='21'>&nbsp;</strong>
-  <span>Articles Published</span>
-  <div class='four spacing'></div>
-</div>
+      {% include milestone.html title="Articles Published" from="0" to="21" icon_class="fa fa-file-text" %}
     </div>
   </div>
   <div class='two spacing'></div>
@@ -379,13 +299,7 @@ socials:
 <div class='full' style='background: #f5f5f5'>
   <div class='row'>
     <div class='large-12 columns'>
-      <div class='alt mod modSectionHeader'>
-  <div class='special-title centered-text'>
-    <h2 style=''>
-      Our services
-    </h2>
-  </div>
-</div>
+      {% include section-header.html title="Our services" class="alt" %}
       <div class='two spacing'></div>
     </div>
   </div>
@@ -393,31 +307,11 @@ socials:
     <div class='large-12 columns'>
       <div class='mod modBoxedTextSlider'>
         <div class='boxes'>
-          <div class='box' style=''>
-  <i class='fa fa-trophy'></i>
-  <h4>Design</h4>
-  <p>Placeat vel itaque perspiciatis sed repellat qui nihil recusandae doloremque aperiam necessitatibus aspernatur. illum ad adipisci saepe dolores cumque fugit nihil minus. temporibus corporis eos dolore reprehenderit ipsa at neque ab ut porro perferendis.</p>
-</div>
-          <div class='box' style=''>
-  <i class='fa fa-compass'></i>
-  <h4>Art direction</h4>
-  <p>Placeat vel itaque perspiciatis sed repellat qui nihil recusandae doloremque aperiam necessitatibus aspernatur. illum ad adipisci saepe dolores cumque fugit nihil minus. temporibus corporis eos dolore reprehenderit ipsa at neque ab ut porro perferendis.</p>
-</div>
-          <div class='box' style=''>
-  <i class='fa fa-star-half-empty'></i>
-  <h4>Branding</h4>
-  <p>Placeat vel itaque perspiciatis sed repellat qui nihil recusandae doloremque aperiam necessitatibus aspernatur. illum ad adipisci saepe dolores cumque fugit nihil minus. temporibus corporis eos dolore reprehenderit ipsa at neque ab ut porro perferendis.</p>
-</div>
-          <div class='box' style=''>
-  <i class='fa fa-image'></i>
-  <h4>Photography</h4>
-  <p>Placeat vel itaque perspiciatis sed repellat qui nihil recusandae doloremque aperiam necessitatibus aspernatur. illum ad adipisci saepe dolores cumque fugit nihil minus. temporibus corporis eos dolore reprehenderit ipsa at neque ab ut porro perferendis.</p>
-</div>
-          <div class='box' style=''>
-  <i class='fa fa-dot-circle-o'></i>
-  <h4>Marketing</h4>
-  <p>Placeat vel itaque perspiciatis sed repellat qui nihil recusandae doloremque aperiam necessitatibus aspernatur. illum ad adipisci saepe dolores cumque fugit nihil minus. temporibus corporis eos dolore reprehenderit ipsa at neque ab ut porro perferendis.</p>
-</div>
+          {% include box.html class="fa fa-trophy" title="Design" text="Placeat vel itaque perspiciatis sed repellat qui nihil recusandae doloremque aperiam necessitatibus aspernatur. illum ad adipisci saepe dolores cumque fugit nihil minus. temporibus corporis eos dolore reprehenderit ipsa at neque ab ut porro perferendis." %}
+          {% include box.html class="fa fa-compass" title="Art direction" text="Placeat vel itaque perspiciatis sed repellat qui nihil recusandae doloremque aperiam necessitatibus aspernatur. illum ad adipisci saepe dolores cumque fugit nihil minus. temporibus corporis eos dolore reprehenderit ipsa at neque ab ut porro perferendis." %}
+          {% include box.html class="fa fa-star-half-empty" title="Branding" text="Placeat vel itaque perspiciatis sed repellat qui nihil recusandae doloremque aperiam necessitatibus aspernatur. illum ad adipisci saepe dolores cumque fugit nihil minus. temporibus corporis eos dolore reprehenderit ipsa at neque ab ut porro perferendis." %}
+          {% include box.html class="fa fa-image" title="Photography" text="Placeat vel itaque perspiciatis sed repellat qui nihil recusandae doloremque aperiam necessitatibus aspernatur. illum ad adipisci saepe dolores cumque fugit nihil minus. temporibus corporis eos dolore reprehenderit ipsa at neque ab ut porro perferendis." %}
+          {% include box.html class="fa fa-dot-circle-o" title="Marketing" text="Placeat vel itaque perspiciatis sed repellat qui nihil recusandae doloremque aperiam necessitatibus aspernatur. illum ad adipisci saepe dolores cumque fugit nihil minus. temporibus corporis eos dolore reprehenderit ipsa at neque ab ut porro perferendis." %}
         </div>
       </div>
     </div>
@@ -427,13 +321,7 @@ socials:
 <div class='full parallax' style='background-image: url(../images/@stock/milestone-bg.jpg); color: #fff;'>
   <div class='row'>
     <div class='large-12 columns'>
-      <div class='alt mod modSectionHeader'>
-  <div class='special-title centered-text'>
-    <h2 style='color: #fff;'>
-      What we are good at
-    </h2>
-  </div>
-</div>
+      {% include section-header.html class="alt" title_style="color: #fff;" title="What we are good at" %}
       <div class='spacing'></div>
       <p style='color: #ccc;'>
         Dolore magna aliquam erat volutpat consectetuer sit amet magna adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat consectetuer sit amet magna adipiscing.
@@ -446,18 +334,10 @@ socials:
       <div class='mod modBarGraph'>
         <ul class='bars'>
           <li>
-            <h4 style="color: #fff;">
-  Web Design
-  <strong>84%</strong>
-</h4>
-<p class='highlighted' data-percent='84'></p>
+            {% include bar-graph.html style="color: #fff;" title="Web Design" percents="84" %}
           </li>
           <li>
-            <h4 style="color: #fff;">
-  Web Development
-  <strong>99%</strong>
-</h4>
-<p class='highlighted' data-percent='99'></p>
+            {% include bar-graph.html style="color: #fff;" title="Web Development" percents="99" %}
           </li>
         </ul>
       </div>
@@ -466,18 +346,10 @@ socials:
       <div class='mod modBarGraph'>
         <ul class='bars'>
           <li>
-            <h4 style="color: #fff;">
-  Branding
-  <strong>90%</strong>
-</h4>
-<p class='highlighted' data-percent='90'></p>
+            {% include bar-graph.html style="color: #fff;" title="Branding" percents="90" %}
           </li>
           <li>
-            <h4 style="color: #fff;">
-  Marketing
-  <strong>66%</strong>
-</h4>
-<p class='highlighted' data-percent='66'></p>
+            {% include bar-graph.html style="color: #fff;" title="Marketing" percents="66" %}
           </li>
         </ul>
       </div>
@@ -489,13 +361,7 @@ socials:
 <div class='full'>
   <div class='row'>
     <div class='large-12 columns'>
-      <div class='alt mod modSectionHeader'>
-  <div class='special-title centered-text'>
-    <h2 style=''>
-      our works
-    </h2>
-  </div>
-</div>
+      {% include section-header.html title="our works" class="alt" %}
       <div class='spacing'></div>
       <p>
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat consectetuer sit amet magna adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat consectetuer sit amet magna adipiscing.
@@ -525,103 +391,19 @@ socials:
           </ul>
         </div>
         <ul class='gallery large-block-grid-4 medium-block-grid-3 seperated small-block-grid-2'>
-          
-            <li class='graphic-design'>
-              <a href='portfolio-item.html'>
-                <img width="600" height="500" alt="" src="../images/@stock/one-page-work-1.jpg" />
+          {% for work in page.works %}
+            <li class='{{work.class}}'>
+              <a href='{{work.link_to}}'>
+                <img width="600" height="500" alt="" src="{{work.image}}" />
                 <div class='overlay' style='background: rgba(143, 221, 115, 0.8);'>
                   <div class='thumb-info'>
-                    <h3>Beautiful Girl</h3>
-                    <p>Design &amp; Development</p>
+                    <h3>{{work.title}}</h3>
+                    <p>{{work.desc}}</p>
                   </div>
                 </div>
               </a>
             </li>
-          
-            <li class='web-design print'>
-              <a href='portfolio-item.html'>
-                <img width="600" height="500" alt="" src="../images/@stock/one-page-work-2.jpg" />
-                <div class='overlay' style='background: rgba(143, 221, 115, 0.8);'>
-                  <div class='thumb-info'>
-                    <h3>Look at me</h3>
-                    <p>Design &amp; Development</p>
-                  </div>
-                </div>
-              </a>
-            </li>
-          
-            <li class='brand'>
-              <a href='portfolio-item.html'>
-                <img width="600" height="500" alt="" src="../images/@stock/one-page-work-3.jpg" />
-                <div class='overlay' style='background: rgba(143, 221, 115, 0.8);'>
-                  <div class='thumb-info'>
-                    <h3>Am I cute</h3>
-                    <p>Design &amp; Development</p>
-                  </div>
-                </div>
-              </a>
-            </li>
-          
-            <li class='development'>
-              <a href='portfolio-item.html'>
-                <img width="600" height="500" alt="" src="../images/@stock/one-page-work-4.jpg" />
-                <div class='overlay' style='background: rgba(143, 221, 115, 0.8);'>
-                  <div class='thumb-info'>
-                    <h3>Umbrella</h3>
-                    <p>Design &amp; Development</p>
-                  </div>
-                </div>
-              </a>
-            </li>
-          
-            <li class='print brand'>
-              <a href='portfolio-item.html'>
-                <img width="600" height="500" alt="" src="../images/@stock/one-page-work-5.jpg" />
-                <div class='overlay' style='background: rgba(143, 221, 115, 0.8);'>
-                  <div class='thumb-info'>
-                    <h3>Canned Bros</h3>
-                    <p>Design &amp; Development</p>
-                  </div>
-                </div>
-              </a>
-            </li>
-          
-            <li class='web-design'>
-              <a href='portfolio-item.html'>
-                <img width="600" height="500" alt="" src="../images/@stock/one-page-work-6.jpg" />
-                <div class='overlay' style='background: rgba(143, 221, 115, 0.8);'>
-                  <div class='thumb-info'>
-                    <h3>Hale</h3>
-                    <p>Design &amp; Development</p>
-                  </div>
-                </div>
-              </a>
-            </li>
-          
-            <li class='web-design'>
-              <a href='portfolio-item.html'>
-                <img width="600" height="500" alt="" src="../images/@stock/one-page-work-7.jpg" />
-                <div class='overlay' style='background: rgba(143, 221, 115, 0.8);'>
-                  <div class='thumb-info'>
-                    <h3>A beautiful day</h3>
-                    <p>Design &amp; Development</p>
-                  </div>
-                </div>
-              </a>
-            </li>
-          
-            <li class='graphic-design'>
-              <a href='portfolio-item.html'>
-                <img width="600" height="500" alt="" src="../images/@stock/one-page-work-8.jpg" />
-                <div class='overlay' style='background: rgba(143, 221, 115, 0.8);'>
-                  <div class='thumb-info'>
-                    <h3>Flower Book</h3>
-                    <p>Design &amp; Development</p>
-                  </div>
-                </div>
-              </a>
-            </li>
-          
+          {% endfor %}
         </ul>
       </div>
     </div>
@@ -647,13 +429,7 @@ socials:
   </div>
   <div class='row'>
     <div class='large-12 columns'>
-      <div class='alt mod modSectionHeader'>
-  <div class='special-title centered-text'>
-    <h2 style='color: #fff;'>
-      What our clients say
-    </h2>
-  </div>
-</div>
+      {% include section-header.html title="What our clients say" title_style="color: #fff;" class="alt" %}
       <div class='spacing'></div>
     </div>
   </div>
@@ -663,25 +439,13 @@ socials:
         <div class='row'>
           <div class='small-12 columns'>
             <div class='items centered-text'>
-              
+              {% for testimonial in page.testimonials %}
                 <div class='item'>
-                  <p class='quote'>Reprehenderit eos et non et ut eum reprehenderit quis sequi quia vel repellendus id. Velit quit blanditiis dolor quam error eos dolores sequi eaque rerum est. Velit quit blanditiis dolor quam error eos dolores sequi eaque rerum est.</p>
-                  <p class='author'>- David White, Designer at Huglab</p>
+                  <p class='quote'>{{testimonial.quote}}</p>
+                  <p class='author'>{{testimonial.author}}</p>
                   <div class='two spacing'></div>
                 </div>
-              
-                <div class='item'>
-                  <p class='quote'>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat consectetuer sit amet magna adipiscing.</p>
-                  <p class='author'>- David White, Designer at Huglab</p>
-                  <div class='two spacing'></div>
-                </div>
-              
-                <div class='item'>
-                  <p class='quote'>Reprehenderit eos et non et ut eum reprehenderit quis sequi quia vel repellendus id. Velit quit blanditiis dolor quam error eos dolores sequi eaque rerum est.</p>
-                  <p class='author'>- David White, Designer at Huglab</p>
-                  <div class='two spacing'></div>
-                </div>
-              
+              {% endfor %}
             </div>
           </div>
           <div class='spacing'></div>
@@ -708,159 +472,42 @@ socials:
 <div class='full'>
   <div class='row'>
     <div class='large-12 columns'>
-      <div class='alt mod modSectionHeader'>
-  <div class='special-title centered-text'>
-    <h2 style=''>
-      Team members
-    </h2>
-  </div>
-</div>
+      {% include section-header.html class="alt" title="Team members" %}
       <div class='two spacing'></div>
     </div>
   </div>
   <div class='row'>
-    
+    {% for member in page.members %}
       <div class='small-6 medium-3 large-3 columns'>
         <div class='mod modTeamMember style-2'>
           <div class='member'>
-            <img class="avatar" width="250" height="250" alt="" src="images/@stock/member-1.jpg" />
+            <img class="avatar" width="250" height="250" alt="" src="{{member.avatar}}" />
             <div class='overlay'>
               <ul class='socials'>
-                
+                {% for social in member.socials %}
                   <li>
-                    <a href=''>
-                      <i class='fa fa-twitter'></i>
+                    <a href='{{social.url}}'>
+                      <i class='fa fa-{{social.icon}}'></i>
                     </a>
                   </li>
-                
-                  <li>
-                    <a href=''>
-                      <i class='fa fa-facebook'></i>
-                    </a>
-                  </li>
-                
+                {% endfor %}
               </ul>
             </div>
           </div>
-          <h3>Mark Wayne</h3>
-          <p class='position'>Founder</p>
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat consectetue.</p>
+          <h3>{{member.name}}</h3>
+          <p class='position'>{{member.position}}</p>
+          <p>{{member.desc}}</p>
           <div class='two spacing'></div>
         </div>
       </div>
-    
-      <div class='small-6 medium-3 large-3 columns'>
-        <div class='mod modTeamMember style-2'>
-          <div class='member'>
-            <img class="avatar" width="250" height="250" alt="" src="images/@stock/member-2.jpg" />
-            <div class='overlay'>
-              <ul class='socials'>
-                
-                  <li>
-                    <a href=''>
-                      <i class='fa fa-twitter'></i>
-                    </a>
-                  </li>
-                
-                  <li>
-                    <a href=''>
-                      <i class='fa fa-facebook'></i>
-                    </a>
-                  </li>
-                
-                  <li>
-                    <a href=''>
-                      <i class='fa fa-dribbble'></i>
-                    </a>
-                  </li>
-                
-              </ul>
-            </div>
-          </div>
-          <h3>Kate Holms</h3>
-          <p class='position'>Creative Director</p>
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat consectetue.</p>
-          <div class='two spacing'></div>
-        </div>
-      </div>
-    
-      <div class='small-6 medium-3 large-3 columns'>
-        <div class='mod modTeamMember style-2'>
-          <div class='member'>
-            <img class="avatar" width="250" height="250" alt="" src="images/@stock/member-3.jpg" />
-            <div class='overlay'>
-              <ul class='socials'>
-                
-                  <li>
-                    <a href=''>
-                      <i class='fa fa-twitter'></i>
-                    </a>
-                  </li>
-                
-                  <li>
-                    <a href=''>
-                      <i class='fa fa-facebook'></i>
-                    </a>
-                  </li>
-                
-                  <li>
-                    <a href=''>
-                      <i class='fa fa-tumblr'></i>
-                    </a>
-                  </li>
-                
-              </ul>
-            </div>
-          </div>
-          <h3>Tome Hason</h3>
-          <p class='position'>Designer</p>
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat consectetue.</p>
-          <div class='two spacing'></div>
-        </div>
-      </div>
-    
-      <div class='small-6 medium-3 large-3 columns'>
-        <div class='mod modTeamMember style-2'>
-          <div class='member'>
-            <img class="avatar" width="250" height="250" alt="" src="images/@stock/member-4.jpg" />
-            <div class='overlay'>
-              <ul class='socials'>
-                
-                  <li>
-                    <a href=''>
-                      <i class='fa fa-twitter'></i>
-                    </a>
-                  </li>
-                
-                  <li>
-                    <a href=''>
-                      <i class='fa fa-facebook'></i>
-                    </a>
-                  </li>
-                
-              </ul>
-            </div>
-          </div>
-          <h3>Lily Whrem</h3>
-          <p class='position'>Developer</p>
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat consectetue.</p>
-          <div class='two spacing'></div>
-        </div>
-      </div>
-    
+    {% endfor %}
   </div>
   <div class='three spacing'></div>
 </div>
 <div class='full parallax' style='background-image: url(../images/@stock/customers-bg.jpg); color: #fff;'>
   <div class='row'>
     <div class='large-12 columns'>
-      <div class='alt mod modSectionHeader'>
-  <div class='special-title centered-text'>
-    <h2 style='color: #fff;'>
-      Our customers
-    </h2>
-  </div>
-</div>
+      {% include section-header.html class="alt" title_style="color: #fff;" title="Our customers" %}
       <div class='spacing'></div>
       <p>
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat consectetuer sit amet magna adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat consectetuer sit amet magna adipiscing.
@@ -872,19 +519,9 @@ socials:
     <div class='large-12 columns'>
       <div class='mod modClients' data-slides_to_show='4'>
         <div class='clients'>
-          
-            <div><img width="272" height="180" alt="" src="../images/@stock/client-1.png" /></div>
-          
-            <div><img width="272" height="180" alt="" src="../images/@stock/client-2.png" /></div>
-          
-            <div><img width="272" height="180" alt="" src="../images/@stock/client-3.png" /></div>
-          
-            <div><img width="272" height="180" alt="" src="../images/@stock/client-4.png" /></div>
-          
-            <div><img width="272" height="180" alt="" src="../images/@stock/client-5.png" /></div>
-          
-            <div><img width="272" height="180" alt="" src="../images/@stock/client-6.png" /></div>
-          
+          {% for client in page.clients %}
+            <div><img width="272" height="180" alt="" src="{{client}}" /></div>
+          {% endfor %}
         </div>
       </div>
     </div>
@@ -895,13 +532,7 @@ socials:
 <div class='full'>
   <div class='row'>
     <div class='large-12 columns'>
-      <div class='alt mod modSectionHeader'>
-  <div class='special-title centered-text'>
-    <h2 style=''>
-      Pricing table
-    </h2>
-  </div>
-</div>
+      {% include section-header.html class="alt" title="Pricing table" %}
       <div class='spacing'></div>
       <p>
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat consectetuer sit amet magna adipiscing. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat consectetuer sit amet magna adipiscing.
@@ -911,32 +542,22 @@ socials:
   </div>
   <div class='spacing'></div>
   <div class='row'>
-    
+    {% for box in page.price_boxes %}
       <div class='medium-6 large-3 columns'>
-        <div class='mod modPriceBox '>
+        <div class='mod modPriceBox {{box.class}}'>
           <div class='info'>
-            <p class='level'>free</p>
-            <p class='desc'>Perfect for freelancers</p>
+            <p class='level'>{{box.type}}</p>
+            <p class='desc'>{{box.desc}}</p>
             <p class='price'>
               <span class='dollar'>$</span>
-              <span class='number'>0</span>
+              <span class='number'>{{box.cost}}</span>
             </p>
           </div>
           <div class='features'>
             <ul>
-              
-                <li class="">15 Users</li>
-              
-                <li class="even">10 Projects</li>
-              
-                <li class="">30GB of Storage</li>
-              
-                <li class="even">5 Workspaces</li>
-              
-                <li class="">Private Forums</li>
-              
-                <li class="even">Enhanced Security</li>
-              
+              {% for line in box.lines %}
+                <li class="{% cycle '', 'even' %}">{{line}}</li>
+              {% endfor %}
             </ul>
           </div>
           <p class='start'>
@@ -944,195 +565,45 @@ socials:
           </p>
         </div>
       </div>
-    
-      <div class='medium-6 large-3 columns'>
-        <div class='mod modPriceBox '>
-          <div class='info'>
-            <p class='level'>basic</p>
-            <p class='desc'>Perfect for small teams</p>
-            <p class='price'>
-              <span class='dollar'>$</span>
-              <span class='number'>20</span>
-            </p>
-          </div>
-          <div class='features'>
-            <ul>
-              
-                <li class="">15 Users</li>
-              
-                <li class="even">10 Projects</li>
-              
-                <li class="">30GB of Storage</li>
-              
-                <li class="even">5 Workspaces</li>
-              
-                <li class="">Private Forums</li>
-              
-                <li class="even">Enhanced Security</li>
-              
-            </ul>
-          </div>
-          <p class='start'>
-            <a class='button small' href='http://themeforest.net/user/honryou/portfolio?ref=honryou'>Start Trial</a>
-          </p>
-        </div>
-      </div>
-    
-      <div class='medium-6 large-3 columns'>
-        <div class='mod modPriceBox featured'>
-          <div class='info'>
-            <p class='level'>plus</p>
-            <p class='desc'>Popular and hot selling</p>
-            <p class='price'>
-              <span class='dollar'>$</span>
-              <span class='number'>45</span>
-            </p>
-          </div>
-          <div class='features'>
-            <ul>
-              
-                <li class="">15 Users</li>
-              
-                <li class="even">10 Projects</li>
-              
-                <li class="">30GB of Storage</li>
-              
-                <li class="even">5 Workspaces</li>
-              
-                <li class="">Private Forums</li>
-              
-                <li class="even">Enhanced Security</li>
-              
-            </ul>
-          </div>
-          <p class='start'>
-            <a class='button small' href='http://themeforest.net/user/honryou/portfolio?ref=honryou'>Start Trial</a>
-          </p>
-        </div>
-      </div>
-    
-      <div class='medium-6 large-3 columns'>
-        <div class='mod modPriceBox '>
-          <div class='info'>
-            <p class='level'>Premium</p>
-            <p class='desc'>Perfect for big companies</p>
-            <p class='price'>
-              <span class='dollar'>$</span>
-              <span class='number'>99</span>
-            </p>
-          </div>
-          <div class='features'>
-            <ul>
-              
-                <li class="">15 Users</li>
-              
-                <li class="even">10 Projects</li>
-              
-                <li class="">30GB of Storage</li>
-              
-                <li class="even">5 Workspaces</li>
-              
-                <li class="">Private Forums</li>
-              
-                <li class="even">Enhanced Security</li>
-              
-            </ul>
-          </div>
-          <p class='start'>
-            <a class='button small' href='http://themeforest.net/user/honryou/portfolio?ref=honryou'>Start Trial</a>
-          </p>
-        </div>
-      </div>
-    
+    {% endfor %}
   </div>
   <div class='four spacing'></div>
 </div>
 <div class='full parallax' style='background-image: url(../images/@stock/blog-posts-bg.jpg);'>
   <div class='row'>
     <div class='large-12 columns'>
-      <div class='alt mod modSectionHeader'>
-  <div class='special-title centered-text'>
-    <h2 style='color: #fff;'>
-      Our recent posts
-    </h2>
-  </div>
-</div>
+      {% include section-header.html title="Our recent posts" class="alt" title_style="color: #fff;" %}
       <div class='two spacing'></div>
     </div>
   </div>
   <div class='row'>
-    
-      
+    {% for post in site.posts %}
+      {% if forloop.index > 3 %}
+        {% break %}
+      {% endif %}
       <div class='large-4 medium-4 columns'>
         <div class='mod modBlogPost'>
-          <a href="/bussiness/2015/05/02/tom-is-designing-the-new-site.html"><img alt="" src="/images/@stock/blog-1.jpg" /></a>
+          <a href="{{post.url}}"><img alt="" src="{{site.url}}/{{post.image}}" /></a>
           <div class='content'>
-            <p class='date'>May 02, 2015</p>
-            <h4><a href="#">Tom is designing the new site</a></h4>
-            <p>Iste neque doloribus dolor quis ad sit dolores dolor sit perferendis. nemo in rerum ducimus possimus aspernatur quas est. dolorem eaque vel id quasi voluptatem eligendi rerum et quo ut. fuga qui ea voluptates sunt</p>
+            <p class='date'>{{post.date | date: "%B %d, %Y" }}</p>
+            <h4><a href="#">{{post.title}}</a></h4>
+            <p>{{post.excerpt}}</p>
             <div class='tags'>
-              
-                <a href="#">Design</a>
-                ,
-              
-                <a href="#">Business</a>
-                
-              
+              {% for tag in post.tags %}
+                <a href="#">{{tag | capitalize}}</a>
+                {% unless forloop.last %},{% endunless %}
+              {% endfor %}
             </div>
           </div>
         </div>
       </div>
-    
-      
-      <div class='large-4 medium-4 columns'>
-        <div class='mod modBlogPost'>
-          <a href="/design/2015/05/01/a-cup-of-coffee-for-you.html"><img alt="" src="/images/@stock/blog-2.jpg" /></a>
-          <div class='content'>
-            <p class='date'>May 01, 2015</p>
-            <h4><a href="#">A cup of coffee for you</a></h4>
-            <p>Iste neque doloribus dolor quis ad sit dolores dolor sit perferendis. nemo in rerum ducimus possimus aspernatur quas est. dolorem eaque vel id quasi voluptatem eligendi rerum et quo ut. fuga qui ea voluptates sunt</p>
-            <div class='tags'>
-              
-                <a href="#">Design</a>
-                ,
-              
-                <a href="#">Business</a>
-                
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      
-      <div class='large-4 medium-4 columns'>
-        <div class='mod modBlogPost'>
-          <a href="/bussiness/2015/04/30/make-some-sketches.html"><img alt="" src="/images/@stock/blog-3.jpg" /></a>
-          <div class='content'>
-            <p class='date'>April 30, 2015</p>
-            <h4><a href="#">Make some sketches</a></h4>
-            <p>Iste neque doloribus dolor quis ad sit dolores dolor sit perferendis. nemo in rerum ducimus possimus aspernatur quas est. dolorem eaque vel id quasi voluptatem eligendi rerum et quo ut. fuga qui ea voluptates sunt</p>
-            <div class='tags'>
-              
-                <a href="#">Design</a>
-                ,
-              
-                <a href="#">Business</a>
-                
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      
-        
+    {% endfor %}
   </div>
   <div class='two spacing'></div>
   <div class='row'>
     <div class='large-12 columns'>
       <p class='centered-text'>
-        <a class='button boxed' href='/blog.html'>See more posts</a>
+        <a class='button boxed' href='{{site.url}}/blog.html'>See more posts</a>
       </p>
     </div>
   </div>
@@ -1142,13 +613,7 @@ socials:
 <div class='full'>
   <div class='row'>
     <div class='large-12 columns'>
-      <div class='alt mod modSectionHeader'>
-  <div class='special-title centered-text'>
-    <h2 style=''>
-      Contact us
-    </h2>
-  </div>
-</div>
+      {% include section-header.html title="Contact us" class="alt" %}
       <div class='two spacing'></div>
     </div>
   </div>
@@ -1192,60 +657,21 @@ socials:
 <div class='full parallax' style='background-image: url(../images/@stock/big-socials-bg.jpg); color: #fff;'>
   <div class='row'>
     <div class='large-12 columns'>
-      <div class='alt mod modSectionHeader'>
-  <div class='special-title centered-text'>
-    <h2 style='color: #fff;'>
-      Find us elsewhere
-    </h2>
-  </div>
-</div>
+      {% include section-header.html class="alt" title="Find us elsewhere" title_style="color: #fff;" %}
       <div class='two spacing'></div>
     </div>
-    
+    {% for social in page.socials %}
       <div class='medium-3 columns'>
         <div class='big-social'>
-          <a href='http://facebook.com'>
-            <i class='fa fa-facebook'></i>
+          <a href='{{social.link_to}}'>
+            <i class='{{social.icon_class}}'></i>
           </a>
-          <h4 style='color: #fff'>Facebook</h4>
-          <p>Connect us with facebook</p>
+          <h4 style='color: #fff'>{{social.title}}</h4>
+          <p>{{social.text}}</p>
         </div>
         <div class='two spacing'></div>
       </div>
-    
-      <div class='medium-3 columns'>
-        <div class='big-social'>
-          <a href='http://facebook.com'>
-            <i class='fa fa-facebook'></i>
-          </a>
-          <h4 style='color: #fff'>Facebook</h4>
-          <p>Connect us with facebook</p>
-        </div>
-        <div class='two spacing'></div>
-      </div>
-    
-      <div class='medium-3 columns'>
-        <div class='big-social'>
-          <a href='http://facebook.com'>
-            <i class='fa fa-facebook'></i>
-          </a>
-          <h4 style='color: #fff'>Facebook</h4>
-          <p>Connect us with facebook</p>
-        </div>
-        <div class='two spacing'></div>
-      </div>
-    
-      <div class='medium-3 columns'>
-        <div class='big-social'>
-          <a href='http://facebook.com'>
-            <i class='fa fa-facebook'></i>
-          </a>
-          <h4 style='color: #fff'>Facebook</h4>
-          <p>Connect us with facebook</p>
-        </div>
-        <div class='two spacing'></div>
-      </div>
-    
+    {% endfor %}
   </div>
   <div class='four spacing'></div>
   <div class='two spacing'></div>
@@ -1254,9 +680,8 @@ socials:
   <div class='two spacing'></div>
   <div class='row'>
     <div class='large-12 columns'>
-      <p>©2014 Osum. All rights reserved.</p>
+      <p>©2014 {{site.title}}. All rights reserved.</p>
     </div>
   </div>
   <div class='spacing'></div>
 </div>
-    </div>
